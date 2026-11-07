@@ -27,3 +27,11 @@ def test_return_within_grace_period_is_free():
 
 def test_return_past_grace_period_charges_excess_days():
     assert late_fee(5, 0.25, grace_days=2) == 0.75
+
+
+def test_fee_is_capped_at_max_fee():
+    assert late_fee(40, 0.25, max_fee=5.0) == 5.0
+
+
+def test_fee_below_cap_is_unchanged():
+    assert late_fee(4, 0.25, max_fee=5.0) == 1.0
